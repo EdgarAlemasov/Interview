@@ -3,7 +3,7 @@ class Stack:
         self.stack = []
 
     def is_empty(self):
-        if self.stack == []:
+        if self.stack == '':
             return True
         else:
             return False
@@ -22,18 +22,21 @@ class Stack:
         return len(self.stack)
 
     def balanceString(self, string):
-        index = 0
+        if len(string) % 2 == 1:
+            return print('Несбалансированно')
+        items = set('({[')
+        match = {('{', '}'), ('(', ')'), ('[', ']')}
         for item in string:
-            if item == '(' or item == '{' or item == '[':
-                index += 1
-            elif item == ']' or '}' or ')':
-                index -= 1
-            if string[0] == ')' or string[0] == '}' or string[0] == ']':
-                return print('Неправильная вложенность скобок!')
-        if index == 0:
-            return print('Сбалансированно!')
-        else:
-            return print('Несбалансированно!')
+            if item in items:
+                stack.push(item)
+            else:
+                if stack.size() == 0:
+                    return print('Несбалансированно')
+                delete_item = stack.pop()
+                if (delete_item, item) not in match:
+                    return print('Несбалансированно')
+        if stack.size() == 0:
+            return print('Сбалансированно')
 
 
 string = '[([])((([[[]]])))]{()}'
@@ -41,11 +44,8 @@ string2 = '[[{())}]'
 string3 = '))(('
 
 stack = Stack()
-stack.push(string)
-print(stack.is_empty())
-print(stack.stack)
-print(stack.pop())
-print(stack.peek())
-print(stack.stack)
-print(stack.size())
 stack.balanceString(string)
+stack.balanceString(string2)
+stack.balanceString(string3)
+
+
